@@ -63,7 +63,7 @@ const Courses = () => {
 
     try {
       const response = await fetch(
-        "https://fewvlearns-kimy.onrender.com/checkout/create-checkout-session",
+        "https://tutoring-vc7f.onrender.com/checkout/create-checkout-session",
         {
           method: "POST",
           headers: {
@@ -79,7 +79,7 @@ const Courses = () => {
         window.location = url;
       } else if (response.status === 401) {
         const refreshResponse = await fetch(
-          "https://fewvlearns-kimy.onrender.com/auth/refresh",
+          "https://tutoring-vc7f.onrender.com/auth/refresh",
           {
             method: "POST",
             headers: {
@@ -94,7 +94,7 @@ const Courses = () => {
           localStorage.setItem("token", newToken);
 
           const retryResponse = await fetch(
-            "https://fewvlearns-kimy.onrender.com/checkout/create-checkout-session",
+            "https://tutoring-vc7f.onrender.com/checkout/create-checkout-session",
             {
               method: "POST",
               headers: {

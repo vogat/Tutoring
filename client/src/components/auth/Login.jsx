@@ -11,7 +11,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://fewvlearns-kimy.onrender.com/auth/login', {
+      const response = await fetch('https://tutoring-vc7f.onrender.com/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ const Login = () => {
     }
   
     try {
-      const response = await fetch('https://fewvlearns-kimy.onrender.com/auth/refresh', {
+      const response = await fetch('https://tutoring-vc7f.onrender.com/auth/refresh', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

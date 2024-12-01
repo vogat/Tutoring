@@ -10,7 +10,7 @@ const Register = ({ onLogin }) => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://fewvlearns-kimy.onrender.com/auth/register', {
+      const response = await fetch('https://tutoring-vc7f.onrender.com/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
