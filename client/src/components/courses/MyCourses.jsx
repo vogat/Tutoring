@@ -2,13 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-// Import images
-import course1 from "../../assets/courses-images/1.jpg";
-import course2 from "../../assets/courses-images/2.jpg";
-import course3 from "../../assets/courses-images/3.jpg";
-import course4 from "../../assets/courses-images/4.jpg";
-import course5 from "../../assets/courses-images/5.jpg";
-
 const MyCourses = () => {
   const [courses, setCourses] = useState([]);
   const [error, setError] = useState(null);
@@ -50,7 +43,6 @@ const MyCourses = () => {
       setCourses(uniqueCourses);
     } catch (error) {
       if (error.response && error.response.status === 403) {
-        // Token might be expired, try refreshing it
         try {
           token = await refreshToken();
           const response = await axios.get(
@@ -96,22 +88,9 @@ const MyCourses = () => {
     fetchPurchasedCourses();
   }, []);
 
-  useEffect(() => {
-    // You can add any side effects that depend on courses here
-  }, [courses]);
-
   if (error) {
     return <div className="text-red-500">{error}</div>;
   }
-
-  // Map course names to imported images
-  const imageMap = {
-    "Mastering Algebra Fundamentals": course1,
-    "Introduction to Creative Writing": course2,
-    "Exploring Physics for Beginners": course3,
-    "SAT Prep: Math and Reading": course4,
-    "Introduction to Public Speaking": course5,
-  };
 
   const handleCourseClick = (courseId) => {
     navigate(`/course-player/${courseId}`);
@@ -124,7 +103,7 @@ const MyCourses = () => {
           Your Purchased Courses 🎉
         </h1>
         <p className="mb-12 text-center text-gray-300">
-          Gear up your development skills to next level with these mindblowing courses
+          Gear up your development skills to the next level with these mind-blowing courses.
         </p>
         {courses.length === 0 ? (
           <p className="text-center text-gray-200">No courses found.</p>
@@ -136,7 +115,7 @@ const MyCourses = () => {
                 key={course.id}
               >
                 <img
-                  src={imageMap[course.name]}
+                  src={course.imageUrl}
                   alt={course.name}
                   className="w-full h-auto object-cover"
                 />
@@ -147,7 +126,7 @@ const MyCourses = () => {
                   >
                     {course.name}
                   </h2>
-                  <p className="text-gray-200">{course.description}</p>
+                  <p className="text-gray-200">{course.description || "No description available."}</p>
                 </div>
               </div>
             ))}
