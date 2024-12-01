@@ -46,6 +46,7 @@ const MyCourses = () => {
           },
         }
       );
+      console.log("Fetched courses:", response.data); // Log the fetched courses
       const uniqueCourses = removeDuplicates(response.data);
       setCourses(uniqueCourses);
     } catch (error) {
@@ -61,6 +62,7 @@ const MyCourses = () => {
               },
             }
           );
+          console.log("Fetched courses after token refresh:", response.data); // Log the fetched courses after token refresh
           const uniqueCourses = removeDuplicates(response.data);
           setCourses(uniqueCourses);
         } catch (refreshError) {
@@ -76,21 +78,22 @@ const MyCourses = () => {
       }
     }
   }
-
+  
   // Function to remove duplicate courses
   function removeDuplicates(courses) {
+    console.log("Courses array:", courses); // Log the courses array
     const uniqueCourses = [];
     const courseIds = new Set();
-
+  
     for (const course of courses) {
       if (!courseIds.has(course.id)) {
         uniqueCourses.push(course);
         courseIds.add(course.id);
-        console.log(course)
+        console.log("Unique course:", course); // Log each unique course
       }
     }
-    console.log('here!')
-
+    console.log("Unique courses array:", uniqueCourses); // Log the unique courses array
+  
     return uniqueCourses;
   }
 
