@@ -86,6 +86,7 @@ const MyCourses = () => {
       if (!courseIds.has(course.id)) {
         uniqueCourses.push(course);
         courseIds.add(course.id);
+        console.log(course)
       }
     }
     console.log('here!')
