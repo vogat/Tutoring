@@ -104,7 +104,7 @@ const MyCourses = () => {
 
   // Map course names to imported images
   const imageMap = {
-    "Learn About Kafka and Nde.js": course1,
+    "Learn About Kafka and Node.js": course1,
     "React, but with webpack": course2,
     "Learn About Terraform in Depth": course3,
     "Kubernetes and Docker for deployment": course4,
