@@ -1,39 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import course1 from "../../assets/courses-images/1.png";
-import course2 from "../../assets/courses-images/2.png";
-import course3 from "../../assets/courses-images/3.png";
-import course4 from "../../assets/courses-images/4.png";
-import course5 from "../../assets/courses-images/5.png";
+import course1 from "../../assets/courses-images/1.jpg";
+import course2 from "../../assets/courses-images/2.jpg";
+import course3 from "../../assets/courses-images/3.jpg";
+import course4 from "../../assets/courses-images/4.jpg";
+import course5 from "../../assets/courses-images/5.jpg";
 
 const courses = [
   {
     id: 1,
-    name: "Real-Time Data Streaming",
-    price: 30,
+    name: "Mastering Algebra Fundamentals",
+    price: 0,
     imageUrl: course1,
   },
   { 
     id: 2,
-    name: "Create React App with Webpack",
+    name: "Introduction to Creative Writing",
     price: 20, 
     imageUrl: course2
   },
   {
     id: 3,
-    name: "Learn about Terraform in Detail",
+    name: "Exploring Physics for Beginners",
     price: 20,
     imageUrl: course3,
   },
   {
     id: 4,
-    name: "Learn In-Depth about Kubernetes",
+    name: "SAT Prep: Math and Reading Help",
     price: 30,
     imageUrl: course4,
   },
   {
     id: 5,
-    name: "Create Your First Serverless Web App",
+    name: "Introduction to Public Speaking",
     price: 40,
     imageUrl: course5,
   },
@@ -78,7 +78,6 @@ const Courses = () => {
         const { url } = await response.json();
         window.location = url;
       } else if (response.status === 401) {
-        // Token might be expired, try refreshing it
         const refreshResponse = await fetch(
           "https://fewvlearns-kimy.onrender.com/auth/refresh",
           {
@@ -94,7 +93,6 @@ const Courses = () => {
           const { token: newToken } = await refreshResponse.json();
           localStorage.setItem("token", newToken);
 
-          // Retry payment with new token
           const retryResponse = await fetch(
             "https://fewvlearns-kimy.onrender.com/checkout/create-checkout-session",
             {
@@ -110,9 +108,7 @@ const Courses = () => {
           if (retryResponse.ok) {
             const { url } = await retryResponse.json();
             window.location = url;
-          } else {
           }
-        } else {
         }
       } else {
         const errorData = await response.json();
@@ -142,15 +138,15 @@ const Courses = () => {
 
   return (
     <div className="text-center pt-36">
-      <h1 className="text-3xl font-bold text-gray-100 pb-4">Our Courses</h1>
-      <p className="text-gray-300 text-center">
+      <h1 className="text-3xl font-bold text-[#e8f1fa] pb-4">Our Courses</h1>
+      <p className="text-[#b3c2d8] text-center">
         All that you need to kickstart your career.
       </p>
       <div className="flex flex-wrap justify-center gap-8 py-12 mx-auto">
         {courses.map((course) => (
           <div
             key={course.id}
-            className="flex flex-col items-stretch rounded overflow-hidden shadow-md shadow-green-300/35 pb-4 bg-[#001313]"
+            className="flex flex-col items-stretch rounded overflow-hidden shadow-md shadow-[#5b99f7]/35 pb-4 bg-[#0e162b]"
           >
             <img
               className="w-full h-48 object-cover"
@@ -158,21 +154,21 @@ const Courses = () => {
               alt={course.name}
             />
             <div className="px-6 py-4 flex-grow">
-              <div className="font-bold text-xl mb-2 text-gray-100">
+              <div className="font-bold text-xl mb-2 text-[#d1e1f7]">
                 {course.name}
               </div>
               <div className="flex justify-center items-center gap-2">
                 <Link to={`/course-details/${course.id}`}>
-                  <button className="border border-green-300 rounded-full hover:bg-green-300 text-white hover:text-gray-900 py-2 px-4 focus:outline-none focus:shadow-outline">
+                  <button className="border border-[#5b99f7] rounded-full hover:bg-[#5b99f7] text-white hover:text-[#0e162b] py-2 px-4 focus:outline-none focus:shadow-outline">
                     Course Details
                   </button>
                 </Link>
-                <div className="text-gray-200 text-lg border border-green-300 px-4 py-1 rounded-full">
+                <div className="text-[#b3c2d8] text-lg border border-[#5b99f7] px-4 py-1 rounded-full">
                   ${course.price}
                 </div>
               </div>
             </div>
-            <div className="px-1 py-2 bg-green-300 w-1/2 rounded-sm flex items-center justify-center mx-auto">
+            <div className="px-1 py-2 bg-[#5b99f7] w-1/2 rounded-sm flex items-center justify-center mx-auto">
               <label className="flex items-center justify-center">
                 <input
                   type="checkbox"
@@ -181,7 +177,7 @@ const Courses = () => {
                   onChange={handleChange}
                   checked={selectedItems.some((item) => item.id === course.id)}
                 />
-                <span className="ml-2 text-gray-700">Select the course</span>
+                <span className="ml-2 text-[#0e162b]">Select the course</span>
               </label>
             </div>
           </div>
@@ -189,7 +185,7 @@ const Courses = () => {
       </div>
       <button
         onClick={handlePayment}
-        className="border border-green-300 rounded-full hover:bg-green-300 text-white hover:text-gray-900 font-bold py-2 px-8 focus:outline-none focus:shadow-outline mt-4"
+        className="border border-[#5b99f7] rounded-full hover:bg-[#5b99f7] text-white hover:text-[#0e162b] font-bold py-2 px-8 focus:outline-none focus:shadow-outline mt-4"
       >
         Proceed to Payment
       </button>

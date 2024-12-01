@@ -2,7 +2,7 @@ import Jane from "./assets/testimonials-images/jane.jpg";
 import Chris from "./assets/testimonials-images/chris.jpg";
 import Leslie from "./assets/testimonials-images/Leslie.jpg";
 import Mike from "./assets/testimonials-images/mike.jpg";
-import Emily from "./assets/testimonials-images/Emily.png";
+import Emily from "./assets/testimonials-images/Emily.jpg";
 
 const people = [
   {
