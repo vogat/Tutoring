@@ -39,7 +39,7 @@ const MyCourses = () => {
           },
         }
       );
-      console.log(response.data);  // Log the response to check the course data
+      console.log(response.data); // Check the structure of the response
       const uniqueCourses = removeDuplicates(response.data);
       setCourses(uniqueCourses);
     } catch (error) {
@@ -54,7 +54,7 @@ const MyCourses = () => {
               },
             }
           );
-          console.log(response.data);  // Log the response to check the course data
+          console.log(response.data); // Check the structure of the response again
           const uniqueCourses = removeDuplicates(response.data);
           setCourses(uniqueCourses);
         } catch (refreshError) {
@@ -67,6 +67,7 @@ const MyCourses = () => {
       }
     }
   }
+  
 
   // Function to remove duplicate courses
   function removeDuplicates(courses) {
