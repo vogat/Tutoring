@@ -38,33 +38,57 @@ const MyCourses = () => {
   async function fetchPurchasedCourses() {
     try {
       let token = localStorage.getItem("token");
-      const response = await axios.get(
+      const response = await fetch(
         "https://tutoring-vc7f.onrender.com/purchased/purchased-courses",
         {
+          method: 'GET',
           headers: {
-            Authorization: `Bearer ${token}`,
-          },
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
         }
       );
-      console.log("Fetched courses:", response.data); // Log the fetched courses
-      const uniqueCourses = removeDuplicates(response.data);
-      setCourses(uniqueCourses);
+  
+      console.log("Response status:", response.status); // Log the response status
+      console.log("Response headers:", response.headers); // Log the response headers
+  
+      if (response.headers.get('content-type').includes('application/json')) {
+        const data = await response.json();
+        console.log("Fetched courses:", data); // Log the fetched courses
+        const uniqueCourses = removeDuplicates(data);
+        setCourses(uniqueCourses);
+      } else {
+        console.error("Unexpected response format:", await response.text());
+        setError("Unexpected response format");
+      }
     } catch (error) {
       if (error.response && error.response.status === 403) {
         // Token might be expired, try refreshing it
         try {
           token = await refreshToken();
-          const response = await axios.get(
+          const response = await fetch(
             "https://tutoring-vc7f.onrender.com/purchased/purchased-courses",
             {
+              method: 'GET',
               headers: {
-                Authorization: `Bearer ${token}`,
-              },
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+              }
             }
           );
-          console.log("Fetched courses after token refresh:", response.data); // Log the fetched courses after token refresh
-          const uniqueCourses = removeDuplicates(response.data);
-          setCourses(uniqueCourses);
+  
+          console.log("Response status after token refresh:", response.status); // Log the response status after token refresh
+          console.log("Response headers after token refresh:", response.headers); // Log the response headers after token refresh
+  
+          if (response.headers.get('content-type').includes('application/json')) {
+            const data = await response.json();
+            console.log("Fetched courses after token refresh:", data); // Log the fetched courses after token refresh
+            const uniqueCourses = removeDuplicates(data);
+            setCourses(uniqueCourses);
+          } else {
+            console.error("Unexpected response format:", await response.text());
+            setError("Unexpected response format");
+          }
         } catch (refreshError) {
           setError("Error refreshing token and fetching courses");
           console.error(
@@ -77,24 +101,6 @@ const MyCourses = () => {
         console.error("Error fetching purchased courses:", error);
       }
     }
-  }
-  
-  // Function to remove duplicate courses
-  function removeDuplicates(courses) {
-    console.log("Courses array:", courses); // Log the courses array
-    const uniqueCourses = [];
-    const courseIds = new Set();
-  
-    for (const course of courses) {
-      if (!courseIds.has(course.id)) {
-        uniqueCourses.push(course);
-        courseIds.add(course.id);
-        console.log("Unique course:", course); // Log each unique course
-      }
-    }
-    console.log("Unique courses array:", uniqueCourses); // Log the unique courses array
-  
-    return uniqueCourses;
   }
 
   useEffect(() => {
