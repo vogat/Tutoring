@@ -40,7 +40,7 @@ export default function Team() {
           Our dedicated team
         </h2>
         <p className="mt-6 text-gray-300">
-          FewvLearns has a team of passionate individuals who are dedicated to
+          LearnConnect has a team of passionate individuals who are dedicated to
           helping you learn new skills and advance your career.
         </p>
       </div>

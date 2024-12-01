@@ -18,7 +18,7 @@ const MyCourses = () => {
   async function refreshToken() {
     try {
       const response = await axios.post(
-        "https://fewvlearns-kimy.onrender.com/auth/refresh-token",
+        "https://tutoring-vc7f.onrender.com/auth/refresh-token",
         {},
         {
           headers: {
@@ -39,7 +39,7 @@ const MyCourses = () => {
     try {
       let token = localStorage.getItem("token");
       const response = await axios.get(
-        "https://fewvlearns-kimy.onrender.com/purchased/purchased-courses",
+        "https://tutoring-vc7f.onrender.com/purchased/purchased-courses",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -53,7 +53,7 @@ const MyCourses = () => {
         try {
           token = await refreshToken();
           const response = await axios.get(
-            "https://fewvlearns-kimy.onrender.com/purchased/purchased-courses",
+            "https://tutoring-vc7f.onrender.com/purchased/purchased-courses",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -104,11 +104,11 @@ const MyCourses = () => {
 
   // Map course names to imported images
   const imageMap = {
-    "Learn About Kafka and Node.js": course1,
-    "React, but with webpack": course2,
-    "Learn About Terraform in Depth": course3,
-    "Kubernetes and Docker for deployment": course4,
-    "Create your own Serverless web app": course5,
+    "Mastering Algebra Fundamentals": course1,
+    "Introduction to Creative Writing": course2,
+    "Exploring Physics for Beginners": course3,
+    "SAT Prep: Math and Reading": course4,
+    "Introduction to Public Speaking": course5,
   };
 
   const handleCourseClick = (courseId) => {
