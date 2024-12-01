@@ -67,7 +67,6 @@ const MyCourses = () => {
       }
     }
   }
-  
 
   // Function to remove duplicate courses
   function removeDuplicates(courses) {
@@ -115,7 +114,7 @@ const MyCourses = () => {
                 key={course.id}
               >
                 <img
-                  src={course.imageUrl}
+                  src={course.imageUrl || "https://via.placeholder.com/400x300"}  // Fallback image
                   alt={course.name}
                   className="w-full h-auto object-cover"
                 />
@@ -127,6 +126,13 @@ const MyCourses = () => {
                     {course.name}
                   </h2>
                   <p className="text-gray-200">{course.description || "No description available."}</p>
+                  {/* Optionally, you could add a button or link to view the course */}
+                  <button 
+                    className="mt-2 bg-green-500 text-white px-4 py-2 rounded-md"
+                    onClick={() => handleCourseClick(course.id)}
+                  >
+                    View Course
+                  </button>
                 </div>
               </div>
             ))}
