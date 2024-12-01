@@ -2,6 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+// Import images
+import course1 from "../../assets/courses-images/1.jpg";
+import course2 from "../../assets/courses-images/2.jpg";
+import course3 from "../../assets/courses-images/3.jpg";
+import course4 from "../../assets/courses-images/4.jpg";
+import course5 from "../../assets/courses-images/5.jpg";
+
 const MyCourses = () => {
   const [courses, setCourses] = useState([]);
   const [error, setError] = useState(null);
@@ -39,11 +46,11 @@ const MyCourses = () => {
           },
         }
       );
-      console.log(response.data); // Check the structure of the response
       const uniqueCourses = removeDuplicates(response.data);
       setCourses(uniqueCourses);
     } catch (error) {
       if (error.response && error.response.status === 403) {
+        // Token might be expired, try refreshing it
         try {
           token = await refreshToken();
           const response = await axios.get(
@@ -54,12 +61,14 @@ const MyCourses = () => {
               },
             }
           );
-          console.log(response.data); // Check the structure of the response again
           const uniqueCourses = removeDuplicates(response.data);
           setCourses(uniqueCourses);
         } catch (refreshError) {
           setError("Error refreshing token and fetching courses");
-          console.error("Error refreshing token and fetching courses:", refreshError);
+          console.error(
+            "Error refreshing token and fetching courses:",
+            refreshError
+          );
         }
       } else {
         setError("Error fetching purchased courses");
@@ -67,7 +76,6 @@ const MyCourses = () => {
       }
     }
   }
-  
 
   // Function to remove duplicate courses
   function removeDuplicates(courses) {
@@ -80,6 +88,7 @@ const MyCourses = () => {
         courseIds.add(course.id);
       }
     }
+    console.log('here!')
 
     return uniqueCourses;
   }
@@ -88,9 +97,22 @@ const MyCourses = () => {
     fetchPurchasedCourses();
   }, []);
 
+  useEffect(() => {
+    // You can add any side effects that depend on courses here
+  }, [courses]);
+
   if (error) {
     return <div className="text-red-500">{error}</div>;
   }
+
+  // Map course names to imported images
+  const imageMap = {
+    "Mastering Algebra Fundamentals": course1,
+    "Introduction to Creative Writing": course2,
+    "Exploring Physics for Beginners": course3,
+    "SAT Prep: Math and Reading": course4,
+    "Introduction to Public Speaking": course5,
+  };
 
   const handleCourseClick = (courseId) => {
     navigate(`/course-player/${courseId}`);
@@ -103,7 +125,7 @@ const MyCourses = () => {
           Your Purchased Courses 🎉
         </h1>
         <p className="mb-12 text-center text-gray-300">
-          Gear up your development skills to the next level with these mind-blowing courses.
+          Gear up your development skills to next level with these mindblowing courses
         </p>
         {courses.length === 0 ? (
           <p className="text-center text-gray-200">No courses found.</p>
@@ -115,7 +137,7 @@ const MyCourses = () => {
                 key={course.id}
               >
                 <img
-                  src={course.imageUrl || "https://via.placeholder.com/400x300"}  // Fallback image
+                  src={imageMap[course.name]}
                   alt={course.name}
                   className="w-full h-auto object-cover"
                 />
@@ -126,14 +148,7 @@ const MyCourses = () => {
                   >
                     {course.name}
                   </h2>
-                  <p className="text-gray-200">{course.description || "No description available."}</p>
-                  {/* Optionally, you could add a button or link to view the course */}
-                  <button 
-                    className="mt-2 bg-green-500 text-white px-4 py-2 rounded-md"
-                    onClick={() => handleCourseClick(course.id)}
-                  >
-                    View Course
-                  </button>
+                  <p className="text-gray-200">{course.description}</p>
                 </div>
               </div>
             ))}
