@@ -39,6 +39,7 @@ const MyCourses = () => {
           },
         }
       );
+      console.log(response.data);  // Log the response to check the course data
       const uniqueCourses = removeDuplicates(response.data);
       setCourses(uniqueCourses);
     } catch (error) {
@@ -53,14 +54,12 @@ const MyCourses = () => {
               },
             }
           );
+          console.log(response.data);  // Log the response to check the course data
           const uniqueCourses = removeDuplicates(response.data);
           setCourses(uniqueCourses);
         } catch (refreshError) {
           setError("Error refreshing token and fetching courses");
-          console.error(
-            "Error refreshing token and fetching courses:",
-            refreshError
-          );
+          console.error("Error refreshing token and fetching courses:", refreshError);
         }
       } else {
         setError("Error fetching purchased courses");
@@ -68,6 +67,7 @@ const MyCourses = () => {
       }
     }
   }
+  
 
   // Function to remove duplicate courses
   function removeDuplicates(courses) {
