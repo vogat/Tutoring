@@ -3,11 +3,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 // Import images
-import course1 from "../../assets/courses-images/1.jpg";
-import course2 from "../../assets/courses-images/2.jpg";
-import course3 from "../../assets/courses-images/3.jpg";
-import course4 from "../../assets/courses-images/4.jpg";
-import course5 from "../../assets/courses-images/5.jpg";
+import course1 from "../../assets/courses-images/1.png";
+import course2 from "../../assets/courses-images/2.png";
+import course3 from "../../assets/courses-images/3.png";
+import course4 from "../../assets/courses-images/4.png";
+import course5 from "../../assets/courses-images/5.png";
 
 const MyCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -38,57 +38,30 @@ const MyCourses = () => {
   async function fetchPurchasedCourses() {
     try {
       let token = localStorage.getItem("token");
-      const response = await fetch(
+      const response = await axios.get(
         "https://tutoring-vc7f.onrender.com/purchased/purchased-courses",
         {
-          method: 'GET',
           headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
-  
-      console.log("Response status:", response.status); // Log the response status
-      console.log("Response headers:", response.headers); // Log the response headers
-  
-      if (response.headers.get('content-type').includes('application/json')) {
-        const data = await response.json();
-        console.log("Fetched courses:", data); // Log the fetched courses
-        const uniqueCourses = removeDuplicates(data);
-        setCourses(uniqueCourses);
-      } else {
-        console.error("Unexpected response format:", await response.text());
-        setError("Unexpected response format");
-      }
+      setCourses(uniqueCourses);
     } catch (error) {
       if (error.response && error.response.status === 403) {
         // Token might be expired, try refreshing it
         try {
           token = await refreshToken();
-          const response = await fetch(
+          const response = await axios.get(
             "https://tutoring-vc7f.onrender.com/purchased/purchased-courses",
             {
-              method: 'GET',
               headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-              }
+                Authorization: `Bearer ${token}`,
+              },
             }
           );
-  
-          console.log("Response status after token refresh:", response.status); // Log the response status after token refresh
-          console.log("Response headers after token refresh:", response.headers); // Log the response headers after token refresh
-  
-          if (response.headers.get('content-type').includes('application/json')) {
-            const data = await response.json();
-            console.log("Fetched courses after token refresh:", data); // Log the fetched courses after token refresh
-            const uniqueCourses = removeDuplicates(data);
-            setCourses(uniqueCourses);
-          } else {
-            console.error("Unexpected response format:", await response.text());
-            setError("Unexpected response format");
-          }
+          const uniqueCourses = removeDuplicates(response.data);
+          setCourses(uniqueCourses);
         } catch (refreshError) {
           setError("Error refreshing token and fetching courses");
           console.error(
@@ -103,12 +76,26 @@ const MyCourses = () => {
     }
   }
 
+  // Function to remove duplicate courses
+  function removeDuplicates(courses) {
+    const uniqueCourses = [];
+    const courseIds = new Set();
+
+    for (const course of courses) {
+      if (!courseIds.has(course.id)) {
+        uniqueCourses.push(course);
+        courseIds.add(course.id);
+      }
+    }
+
+    return uniqueCourses;
+  }
+
   useEffect(() => {
     fetchPurchasedCourses();
   }, []);
 
   useEffect(() => {
-    // You can add any side effects that depend on courses here
   }, [courses]);
 
   if (error) {
@@ -117,11 +104,11 @@ const MyCourses = () => {
 
   // Map course names to imported images
   const imageMap = {
-    "Mastering Algebra Fundamentals": course1,
-    "Introduction to Creative Writing": course2,
-    "Exploring Physics for Beginners": course3,
-    "SAT Prep: Math and Reading": course4,
-    "Introduction to Public Speaking": course5,
+    "Learn About Kafka and Node.js": course1,
+    "React, but with webpack": course2,
+    "Learn About Terraform in Depth": course3,
+    "Kubernetes and Docker for deployment": course4,
+    "Create your own Serverless web app": course5,
   };
 
   const handleCourseClick = (courseId) => {
@@ -131,40 +118,38 @@ const MyCourses = () => {
   return (
     <section className="py-4 flex flex-col justify-center items-center max-w-5xl mx-auto">
       <div className="mt-36">
-        <h1 className="text-3xl font-bold text-center text-gray-100 mb-4">
-          Your Purchased Courses 🎉
-        </h1>
-        <p className="mb-12 text-center text-gray-300">
-          Gear up your development skills to next level with these mindblowing courses
-        </p>
-        {courses.length === 0 ? (
-          <p className="text-center text-gray-200">No courses found.</p>
-        ) : (
-          <div className="md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
-            {courses.map((course) => (
-              <div
-                className="bg-[#001313] overflow-hidden text-green-300 hover:text-green-400 shadow-sm shadow-green-300 rounded-sm hover:shadow-green-300 transform transition-transform duration-300 hover:scale-105"
-                key={course.id}
-              >
-                <img
-                  src={imageMap[course.name]}
-                  alt={course.name}
-                  className="w-full h-auto object-cover"
-                />
-                <div className="p-4">
-                  <h2
-                    className="text-xl font-semibold cursor-pointer"
-                    onClick={() => handleCourseClick(course.id)}
-                  >
-                    {course.name}
-                  </h2>
-                  <p className="text-gray-200">{course.description}</p>
+          <h1 className="text-3xl font-bold text-center text-gray-100 mb-4">
+            Your Purchased Courses 🎉
+          </h1>
+          <p className="mb-12 text-center text-gray-300">Gear up your development skills to next level with these mindblowing courses</p>
+          {courses.length === 0 ? (
+            <p className="text-center text-gray-200">No courses found.</p>
+          ) : (
+            <div className="md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
+              {courses.map((course) => (
+                <div
+                  className="bg-[#001313] overflow-hidden text-green-300 hover:text-green-400 shadow-sm shadow-green-300 rounded-sm hover:shadow-green-300 transform transition-transform duration-300 hover:scale-105"
+                  key={course.id}
+                >
+                  <img
+                    src={imageMap[course.name]}
+                    alt={course.name}
+                    className="w-full h-auto object-cover"
+                  />
+                  <div className="p-4">
+                    <h2
+                      className="text-xl font-semibold cursor-pointer"
+                      onClick={() => handleCourseClick(course.id)}
+                    >
+                      {course.name}
+                    </h2>
+                    <p className="text-gray-200">{course.description}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+              ))}
+            </div>
+          )}
+        </div>
     </section>
   );
 };
