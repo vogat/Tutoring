@@ -46,7 +46,8 @@ const MyCourses = () => {
           },
         }
       );
-      // setCourses(uniqueCourses);
+      const uniqueCourses = removeDuplicates(response.data);
+      setCourses(uniqueCourses);
     } catch (error) {
       if (error.response && error.response.status === 403) {
         // Token might be expired, try refreshing it
@@ -60,8 +61,8 @@ const MyCourses = () => {
               },
             }
           );
-          // const uniqueCourses = removeDuplicates(response.data);
-          // setCourses(uniqueCourses);
+          const uniqueCourses = removeDuplicates(response.data);
+          setCourses(uniqueCourses);
         } catch (refreshError) {
           setError("Error refreshing token and fetching courses");
           console.error(
@@ -77,19 +78,19 @@ const MyCourses = () => {
   }
 
   // Function to remove duplicate courses
-  // function removeDuplicates(courses) {
-  //   const uniqueCourses = [];
-  //   const courseIds = new Set();
+  function removeDuplicates(courses) {
+    const uniqueCourses = [];
+    const courseIds = new Set();
 
-  //   for (const course of courses) {
-  //     if (!courseIds.has(course.id)) {
-  //       uniqueCourses.push(course);
-  //       courseIds.add(course.id);
-  //     }
-  //   }
+    for (const course of courses) {
+      if (!courseIds.has(course.id)) {
+        uniqueCourses.push(course);
+        courseIds.add(course.id);
+      }
+    }
 
-  //   return uniqueCourses;
-  // }
+    return uniqueCourses;
+  }
   
   useEffect(() => {
     fetchPurchasedCourses();
