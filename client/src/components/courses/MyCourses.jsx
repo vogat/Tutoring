@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-// Import images
 import course1 from "../../assets/courses-images/1.jpg";
 import course2 from "../../assets/courses-images/2.jpg";
 import course3 from "../../assets/courses-images/3.jpg";
@@ -14,128 +12,78 @@ const MyCourses = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Hardcoded list of all available courses
-  const allCourses = [
-    { id: 1, name: "Mastering Algebra Fundamentals", description: "Learn the fundamentals of algebra." },
-    { id: 2, name: "Introduction to Creative Writing", description: "Explore the basics of creative writing." },
-    { id: 3, name: "Exploring Physics for Beginners", description: "Understand the basics of physics." },
-    { id: 4, name: "SAT Prep: Math and Reading", description: "Prepare for the SAT with math and reading practice." },
-    { id: 5, name: "Introduction to Public Speaking", description: "Learn the essentials of public speaking." },
-  ];
+  const defaultImage = "path/to/default/image.jpg";
 
-  // Function to refresh the token
-  async function refreshToken() {
+  const refreshToken = async () => {
     try {
       const response = await axios.post(
         "https://tutoring-vc7f.onrender.com/auth/refresh-token",
         {},
         {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
       const newToken = response.data.token;
       localStorage.setItem("token", newToken);
       return newToken;
-    } catch (error) {
-      throw error;
+    } catch (err) {
+      console.error("Token refresh failed:", err);
+      throw err;
     }
-  }
+  };
 
-  // Function to fetch purchased course IDs
-  async function fetchPurchasedCourses() {
+  const fetchPurchasedCourses = async () => {
     try {
-      let token = localStorage.getItem("token");
+      const token = localStorage.getItem("token");
       const response = await axios.get(
         "https://tutoring-vc7f.onrender.com/purchased/purchased-courses",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-
-      console.log("Response status:", response.status); // Log the response status
-      console.log("Response headers:", response.headers); // Log the response headers
-
-      if (response.headers['content-type'] && response.headers['content-type'].includes('application/json')) {
-        console.log("Fetched courses:", response.data); // Log the fetched courses
-        const purchasedCourseIds = response.data.map(course => course.id);
-        console.log("Purchased course IDs:", purchasedCourseIds); // Log the purchased course IDs
-        filterPurchasedCourses(purchasedCourseIds);
-      } else {
-        console.error("Unexpected response format:", response.data);
-        setError("Unexpected response format");
-      }
+      const courses = Array.isArray(response.data) ? response.data : [];
+      setCourses(removeDuplicates(courses));
     } catch (error) {
-      console.error("Error fetching purchased courses:", error);
-      if (error.response && error.response.status === 403) {
-        // Token might be expired, try refreshing it
+      if (error.response?.status === 403) {
         try {
-          const token = await refreshToken();
+          const newToken = await refreshToken();
           const response = await axios.get(
             "https://tutoring-vc7f.onrender.com/purchased/purchased-courses",
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
+            { headers: { Authorization: `Bearer ${newToken}` } }
           );
-
-          console.log("Response status after token refresh:", response.status); // Log the response status after token refresh
-          console.log("Response headers after token refresh:", response.headers); // Log the response headers after token refresh
-
-          if (response.headers['content-type'] && response.headers['content-type'].includes('application/json')) {
-            console.log("Fetched courses after token refresh:", response.data); // Log the fetched courses after token refresh
-            const purchasedCourseIds = response.data.map(course => course.id);
-            console.log("Purchased course IDs after token refresh:", purchasedCourseIds); // Log the purchased course IDs after token refresh
-            filterPurchasedCourses(purchasedCourseIds);
-          } else {
-            console.error("Unexpected response format:", response.data);
-            setError("Unexpected response format");
-          }
+          const courses = Array.isArray(response.data) ? response.data : [];
+          setCourses(removeDuplicates(courses));
         } catch (refreshError) {
-          setError("Error refreshing token and fetching courses");
-          console.error(
-            "Error refreshing token and fetching courses:",
-            refreshError
-          );
+          console.error("Failed after refreshing token:", refreshError);
+          setError("Session expired, please log in again.");
+          navigate("/login");
         }
       } else {
-        setError("Error fetching purchased courses");
-        console.error("Error fetching purchased courses:", error);
+        console.error("API fetch error:", error);
+        setError("Failed to load courses. Try again later.");
       }
     }
-  }
+  };
 
-  // Function to filter courses based on purchased course IDs
-  function filterPurchasedCourses(purchasedCourseIds) {
-    const purchasedCourses = allCourses.filter(course => purchasedCourseIds.includes(course.id));
-    console.log("Filtered purchased courses:", purchasedCourses); // Log the filtered purchased courses
-    setCourses(purchasedCourses);
-  }
+  const removeDuplicates = (courses) => {
+    const courseIds = new Set();
+    return courses.filter((course) => {
+      if (courseIds.has(course.id)) return false;
+      courseIds.add(course.id);
+      return true;
+    });
+  };
+
+  const getImage = (courseName) =>
+    ({
+      "Mastering Algebra Fundamentals": course1,
+      "Introduction to Creative Writing": course2,
+      "Exploring Physics for Beginners": course3,
+      "SAT Prep: Math and Reading": course4,
+      "Introduction to Public Speaking": course5,
+    }[courseName] || defaultImage);
 
   useEffect(() => {
     fetchPurchasedCourses();
   }, []);
-
-  if (error) {
-    return <div className="text-red-500">{error}</div>;
-  }
-
-  // Map course names to imported images
-  const imageMap = {
-    "Mastering Algebra Fundamentals": course1,
-    "Introduction to Creative Writing": course2,
-    "Exploring Physics for Beginners": course3,
-    "SAT Prep: Math and Reading": course4,
-    "Introduction to Public Speaking": course5,
-  };
-
-  const handleCourseClick = (courseId) => {
-    navigate(`/course-player/${courseId}`);
-  };
 
   return (
     <section className="py-4 flex flex-col justify-center items-center max-w-5xl mx-auto">
@@ -144,10 +92,15 @@ const MyCourses = () => {
           Your Purchased Courses 🎉
         </h1>
         <p className="mb-12 text-center text-gray-300">
-          Gear up your development skills to next level with these mindblowing courses
+          Gear up your development skills to next level with these mindblowing
+          courses
         </p>
-        {courses.length === 0 ? (
-          <p className="text-center text-gray-200">No courses found.</p>
+        {error ? (
+          <div className="text-red-500 text-center">{error}</div>
+        ) : courses.length === 0 ? (
+          <p className="text-center text-gray-200">
+            No courses found. Check your purchases or contact support.
+          </p>
         ) : (
           <div className="md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
             {courses.map((course) => (
@@ -156,14 +109,14 @@ const MyCourses = () => {
                 className="bg-gray-800 rounded-lg overflow-hidden shadow-lg"
               >
                 <img
-                  src={imageMap[course.name]}
+                  src={getImage(course.name)}
                   alt={course.name}
                   className="w-full h-auto object-cover"
                 />
                 <div className="p-4">
                   <h2
                     className="text-xl font-semibold cursor-pointer"
-                    onClick={() => handleCourseClick(course.id)}
+                    onClick={() => navigate(`/course-player/${course.id}`)}
                   >
                     {course.name}
                   </h2>
