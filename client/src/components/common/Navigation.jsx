@@ -45,7 +45,7 @@ const Navigation = () => {
           {isAuthenticated ? (
             <>
               {hasPurchasedCourses && (
-                <Link to="/mycourses" className="text-white hover:text-green-300 mx-4">
+                <Link to="/my-courses" className="text-white hover:text-green-300 mx-4">
                   My Courses
                 </Link>
               )}
@@ -84,7 +84,7 @@ const Navigation = () => {
           {isAuthenticated ? (
             <>
               {hasPurchasedCourses && (
-                <Link to="/mycourses" className="text-white hover:text-green-300 mx-4 my-4" onClick={toggleMenu}>
+                <Link to="/my-courses" className="text-white hover:text-green-300 mx-4 my-4" onClick={toggleMenu}>
                   My Courses
                 </Link>
               )}
