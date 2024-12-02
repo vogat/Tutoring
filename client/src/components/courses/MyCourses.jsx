@@ -24,7 +24,13 @@ const MyCourses = () => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        setCourses(response.data);
+        console.log("Fetched courses:", response.data); // Log the fetched courses
+        if (Array.isArray(response.data)) {
+          setCourses(response.data);
+        } else {
+          setError("Unexpected response format");
+          console.error("Unexpected response format:", response.data);
+        }
       } catch (error) {
         setError("Error fetching purchased courses");
         console.error("Error fetching purchased courses:", error);
