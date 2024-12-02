@@ -30,7 +30,7 @@ const Success = () => {
   }, [location]);
 
   const handleGoToCourses = () => {
-    navigate('/my-courses');
+    navigate('/mycourses');
   };
 
   return (

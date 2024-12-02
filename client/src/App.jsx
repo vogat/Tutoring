@@ -51,7 +51,7 @@ const App = () => {
            <Route path="/login" element={<Login onLogin={handleLogin} />} />
            <Route path="/courses" element={<Courses />} />
            <Route path="/course-details/:id" element={<CourseDetails />} />
-           <Route path="/my-courses" element={<PrivateRoute element={<MyCourses />} />} />
+           <Route path="/mycourses" element={<PrivateRoute element={<MyCourses />} />} />
            <Route path="/start-course/:id" element={<PrivateRoute element={<CourseContent />} />} />
            <Route path="/course-player/:courseId" element={<PrivateRoute element={<CoursePlayer />} />} />
             <Route path="/success" element={<Success />} />
