@@ -91,6 +91,7 @@ const MyCourses = () => {
     return uniqueCourses;
   }
 
+  const uniqueCourses = removeDuplicates(response.data);
   useEffect(() => {
     fetchPurchasedCourses();
   }, []);
