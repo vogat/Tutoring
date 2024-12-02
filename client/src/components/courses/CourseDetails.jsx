@@ -1,71 +1,78 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
-// Sample course details data
 const courseDetailsData = {
   1: {
-    course_name: "Mastering Algebra Fundamentals",
-    syllabus: "Simplifying equations, solving inequalities, and graphing linear functions.",
-    instructor_bio: "Sarah Johnson is a certified math tutor with over 8 years of teaching experience. She has a knack for simplifying complex concepts and making math enjoyable.",
-    prerequisites: "Basic arithmetic knowledge and a passion for learning.",
+    course_name: "Real-Time Data Streaming",
+    syllabus: "Learn about Kafka Architecture, Use Kafkajs with Node.js",
+    instructor_bio: "John Doe is a seasoned Kafka expert...",
+    prerequisites: "a little bit of Node.js knowledge, and you laptop, yes, just that.."
   },
   2: {
-    course_name: "Introduction to Creative Writing",
-    syllabus: "Developing story ideas, crafting compelling characters, and exploring different genres.",
-    instructor_bio: "Mark Thompson is a published author and has been teaching creative writing workshops for the past 5 years.",
-    prerequisites: "No prerequisites. Just bring your creativity and an open mind!",
+    course_name: "Create React App with Webpack",
+    syllabus: "enhance your app, advanced state management",
+    instructor_bio: "Jane Smith is a leading React developer...",
+    prerequisites: "No Preq. Let’s just dive in…"
   },
   3: {
-    course_name: "Exploring Physics for Beginners",
-    syllabus: "Newton's laws of motion, basic thermodynamics, and simple circuit analysis.",
-    instructor_bio: "Dr. Emily Roberts has a PhD in Physics and 10 years of experience teaching high school and college-level courses.",
-    prerequisites: "A curious mind and a calculator.",
+    course_name: "Learn about Terraform in detail",
+    syllabus: "Learn to Create CI/CD pipelines, Automate the deployment process",
+    instructor_bio: "Mike Johnson has over 10 years of Terraform experience...",
+    prerequisites: "Just you and your Laptop."
   },
   4: {
-    course_name: "SAT Prep: Math and Reading",
-    syllabus: "Learn test-taking strategies, tackle common problem types, and practice with real questions.",
-    instructor_bio: "David Lee is a professional test prep tutor with a 99th percentile SAT score and a track record of helping students achieve their dream scores.",
-    prerequisites: "Access to SAT prep materials (provided during the course).",
+    course_name: "Learn in depth about Kubernetes",
+    syllabus: "Create clusters, Learn the intricacies of K8s",
+    instructor_bio: "Emily Davis has built numerous full stack applications...",
+    prerequisites: "A basic knowledge about Node.js. Just that."
   },
   5: {
-    course_name: "Introduction to Public Speaking",
-    syllabus: "Overcoming stage fright, crafting persuasive speeches, and mastering body language.",
-    instructor_bio: "Jessica Adams is a communications expert with years of experience coaching students and professionals in public speaking.",
-    prerequisites: "No prerequisites. Come with the willingness to step out of your comfort zone!",
-  },
+    course_name: "Create your first own server less web app",
+    syllabus: "Use various AWS products like: S3 bucket, EC2 and many more..",
+    instructor_bio: "Chris Wilson is a AWS guru...",
+    prerequisites: "AWS account…"
+  }
 };
 
 const CourseDetails = () => {
-  const { id } = useParams(); // Retrieve the course ID from the route
+  const { id } = useParams();
   const courseDetails = courseDetailsData[id];
 
-  // Render a loading state or error if the course is not found
   if (!courseDetails) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100 mt-36">
-        <p className="text-lg text-red-600">Error: Course not found.</p>
+        Loading...
       </div>
     );
   }
 
-  // Render the course details page
   return (
     <div className="container mx-auto flex items-center justify-center rounded-lg">
-      <div className="mt-36 w-full bg-[#001313] p-8 shadow-md shadow-green-300/35 rounded-lg">
+      <div className="mt-36 w-full bg-style  bg-[#001313] p-8 shadow-md shadow-green-300/35 rounded-lg">
         <h2 className="text-3xl text-gray-100 font-bold mb-6 text-center">
           {courseDetails.course_name}
         </h2>
         <div className="mb-8">
-          <h3 className="text-2xl text-gray-200 font-semibold mb-4">What Will Be Covered?</h3>
-          <p className="text-gray-300 leading-relaxed">{courseDetails.syllabus}</p>
+          <h3 className="text-2xl text-gray-200 font-semibold mb-4">What will be Covered?</h3>
+          <p className="text-gray-300 leading-relaxed">
+            {courseDetails.syllabus}
+          </p>
         </div>
         <div className="mb-8">
-          <h3 className="text-2xl text-gray-200 font-semibold mb-4">Who Is the Instructor?</h3>
-          <p className="text-gray-300 leading-relaxed">{courseDetails.instructor_bio}</p>
+          <h3 className="text-2xl text-gray-200 font-semibold mb-4">
+            Who is the Instructor?
+          </h3>
+          <p className="text-gray-300 leading-relaxed">
+            {courseDetails.instructor_bio}
+          </p>
         </div>
         <div className="mb-8">
-          <h3 className="text-2xl text-gray-200 font-semibold mb-4">What Are the Prerequisites?</h3>
-          <p className="text-gray-300 leading-relaxed">{courseDetails.prerequisites}</p>
+          <h3 className="text-2xl text-gray-200 font-semibold mb-4">
+            What are the Prerequisites?
+          </h3>
+          <p className="text-gray-300 leading-relaxed">
+            {courseDetails.prerequisites}
+          </p>
         </div>
       </div>
     </div>
