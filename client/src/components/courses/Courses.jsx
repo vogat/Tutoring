@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import course1 from "../../assets/courses-images/1.png";
-import course2 from "../../assets/courses-images/2.png";
-import course3 from "../../assets/courses-images/3.png";
-import course4 from "../../assets/courses-images/4.png";
-import course5 from "../../assets/courses-images/5.png";
+import course1 from "../../assets/courses-images/1.jpg";
+import course2 from "../../assets/courses-images/2.jpg";
+import course3 from "../../assets/courses-images/3.jpg";
+import course4 from "../../assets/courses-images/4.jpg";
+import course5 from "../../assets/courses-images/5.jpg";
 
 const courses = [
   {
