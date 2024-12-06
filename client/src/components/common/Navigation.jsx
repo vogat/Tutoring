@@ -26,7 +26,7 @@ const Navigation = () => {
       <div className="container mx-auto flex justify-between items-center p-4">
         <div className="flex items-center">
           <Link to="/">
-            <img src={NavIcon} alt="Logo" className="h-10 w-10" />
+            <img src={NavIcon} alt="Logo" className="h-16 w-12" />
           </Link>
         </div>
         <div className="hidden md:flex items-center">

@@ -11,7 +11,7 @@ const CoursePlayer = () => {
   useEffect(() => {
     const fetchCourseDetails = async () => {
       try {
-        const response = await axios.get(`https://tutoring-vc7f.onrender.com/course-content/${courseId}`, {
+        const response = await axios.get(`http://localhost:3000/course-content/${courseId}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
@@ -66,10 +66,10 @@ const CoursePlayer = () => {
               </ul>
             </div>
           )}
-          {courseDetails.instructor_bio && (
+          {courseDetails.tutor_bio && (
             <div className="mb-6">
-              <h3 className="text-xl font-semibold text-green-300 mb-2">Instructor Bio:</h3>
-              <p className="text-gray-300">{courseDetails.instructor_bio}</p>
+              <h3 className="text-xl font-semibold text-green-300 mb-2">tutor Bio:</h3>
+              <p className="text-gray-300">{courseDetails.tutor_bio}</p>
             </div>
           )}
           {courseDetails.testimonials && (

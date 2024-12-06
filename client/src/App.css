@@ -2,20 +2,21 @@
 
 @import 'highlight.js/styles/tokyo-night-dark.css';
 
+
 body {
-  background-color: #2f3b4f;
+  background-color: #001313;
   font-family: "Roboto", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
-  color: #e8e9f3;
+  color: white;
   margin: 0;
 }
 
 .bg-style {
-  background: radial-gradient(circle at center, rgba(34, 36, 60, 0.6), rgba(23, 26, 46, 0.6) 60%, rgba(20, 35, 64, 0.6) 90%, rgba(13, 26, 57, 0.6) 100%);
+  background: radial-gradient(circle at center, rgba(27, 26, 26, 0.6), rgba(0, 19, 19, 0.6) 60%, rgba(0, 57, 61, 0.6) 90%, rgba(11, 43, 69, 0.6) 100%);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
   height: 100%;
 }
@@ -25,12 +26,13 @@ body {
   padding: 0 2rem;
 }
 
+
 /* markdown.css */
 .markdown-body {
   font-family: "Lora", serif;
   line-height: 1.6;
   padding: 0 1em;
-  color: #d0d4e6;
+  color: #333;
 }
 
 .markdown-body h1 {
@@ -38,7 +40,7 @@ body {
   margin: 1em 0;
   padding: 0;
   font-weight: bold;
-  color: #c3dafe;
+  color: #fff;
 }
 
 .markdown-body h2,
@@ -49,17 +51,17 @@ body {
   margin: 1em 0;
   padding: 0;
   font-weight: bold;
-  color: #a3bffa;
+  color: #f3f3f3;
 }
 
 .markdown-body p {
   margin: 1em 0;
   padding: 0;
-  color: #9da4b8;
+  color: #cdc6c6;
 }
 
 .markdown-body pre {
-  background-color: #1e2138;
+  background-color: #2f2f2f;
   padding: 1em;
   border-radius: 5px;
   overflow: auto;
@@ -68,26 +70,26 @@ body {
 .markdown-body code {
   padding: 0.2em 0.4em;
   border-radius: 3px;
-  color: #ffc107;
+  color: #ffffff;
 }
 
 /* Syntax highlighting for code blocks */
 .markdown-body pre code {
-  color: #ffee58; /* Default text color for code blocks */
+  color: #ffffff; /* Default text color for code blocks */
 }
 
 /* Additional styles for lists, blockquotes, links, etc. */
 .markdown-body ul,
 .markdown-body ol {
   margin: 1em 0;
-  color: #80c2cb;
+  color: #86efac;
 }
 
 .markdown-body blockquote {
   margin: 1em 0;
   padding: 0.5em 1em;
-  background-color: #26293e;
-  border-left: 5px solid #80cbc4;
+  background-color: #2f2f2f;
+  border-left: 5px solid #86efac;
 }
 
 .markdown-body img {

@@ -3,11 +3,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 // Import images
-import course1 from "../../assets/courses-images/1.jpg";
-import course2 from "../../assets/courses-images/2.jpg";
-import course3 from "../../assets/courses-images/3.jpg";
-import course4 from "../../assets/courses-images/4.jpg";
-import course5 from "../../assets/courses-images/5.jpg";
+import course1 from "../../assets/courses-images/1.png";
+import course2 from "../../assets/courses-images/2.png";
+import course3 from "../../assets/courses-images/3.png";
+import course4 from "../../assets/courses-images/4.png";
+import course5 from "../../assets/courses-images/5.png";
 
 const MyCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -18,7 +18,7 @@ const MyCourses = () => {
   async function refreshToken() {
     try {
       const response = await axios.post(
-        "https://tutoring-vc7f.onrender.com/auth/refresh-token",
+        "http://localhost:3000/auth/refresh-token",
         {},
         {
           headers: {
@@ -39,7 +39,7 @@ const MyCourses = () => {
     try {
       let token = localStorage.getItem("token");
       const response = await axios.get(
-        "https://tutoring-vc7f.onrender.com/purchased/purchased-courses",
+        "http://localhost:3000/purchased/purchased-courses",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -54,7 +54,7 @@ const MyCourses = () => {
         try {
           token = await refreshToken();
           const response = await axios.get(
-            "https://tutoring-vc7f.onrender.com/purchased/purchased-courses",
+            "http://localhost:3000/purchased/purchased-courses",
             {
               headers: {
                 Authorization: `Bearer ${token}`,

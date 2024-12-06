@@ -18,11 +18,11 @@ const checkPurchasedCourses = async (userId, courseIds) => {
 };
 
 const storeItems = new Map([
-  [1, { priceInCents: 0, name: "Mastering Algebra Fundamentals"}],
-  [2, { priceInCents: 2000, name: "Introduction to Creative Writing" }],
-  [3, { priceInCents: 2000, name: "Exploring Physics for Beginners" }],
-  [4, { priceInCents: 3000, name: "SAT Prep: Math and Reading" }],
-  [5, { priceInCents: 4000, name: "Introduction to Public Speaking" }],
+  [1, { priceInCents: 3000, name: "Learn About Kafka and Node.js"}],
+  [2, { priceInCents: 2000, name: "React, but with webpack" }],
+  [3, { priceInCents: 2000, name: "Learn About Terraform in Depth" }],
+  [4, { priceInCents: 3000, name: "Kubernetes and Docker for deployment" }],
+  [5, { priceInCents: 4000, name: "Create your own Serverless web app" }],
 ]);
 
 exports.createCheckoutSession = async (req, res) => {

@@ -2,23 +2,23 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const { initializeConnection } = require("./config/database");
-const path = require("path");
+// const path = require("path");
 
 const app = express();
 app.use(express.json());
 app.use(cors({
   origin: [
-    "http://localhost:5173/",
+    "http://localhost:5173",
   ],
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
-app.use(express.static(path.join(__dirname, "../client/dist")));
+// app.use(express.static(path.join(__dirname, "../client/dist")));
 
-app.get("*", (_, res) => {
-  res.sendFile(path.resolve(__dirname, "../client/dist/index.html"));
-});
+// app.get("*", (_, res) => {
+//   res.sendFile(path.resolve(__dirname, "../client/dist/index.html"));
+// });
 
 const authRoutes = require("./routes/authRoutes");
 const checkoutRoutes = require("./routes/checkoutRoutes");

@@ -2,7 +2,7 @@ import Jane from "./assets/testimonials-images/jane.jpg";
 import Chris from "./assets/testimonials-images/chris.jpg";
 import Leslie from "./assets/testimonials-images/Leslie.jpg";
 import Mike from "./assets/testimonials-images/mike.jpg";
-import Emily from "./assets/testimonials-images/Emily.jpg";
+import Emily from "./assets/testimonials-images/Emily.png";
 
 const people = [
   {
@@ -40,7 +40,7 @@ export default function Team() {
           Our dedicated team
         </h2>
         <p className="mt-6 text-gray-300">
-          LearnConnect has a team of passionate individuals who are dedicated to
+          FewvLearns has a team of passionate individuals who are dedicated to
           helping you learn new skills and advance your career.
         </p>
       </div>

@@ -114,7 +114,7 @@ export default function Footer() {
             </Link>
           </div>
           <span className="text-lg text-green-300 text-center block">
-            ©<Link to="/">LearnConnect</Link> 2024. All rights
+            ©<Link to="/">FewvLearns</Link> 2024. All rights
             reserved.
           </span>
         </div>
